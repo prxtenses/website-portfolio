@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Construction } from "lucide-react";
+import { Check, Construction } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,7 +18,7 @@ interface Project {
   accent: string;
   size: "large" | "medium" | "small";
   status: "wip" | "soon" | "done";
-  github?: string;
+  site?: string;
   live?: string;
 }
 
@@ -32,6 +32,7 @@ const PROJECTS: Project[] = [
     accent: "#6366f1",
     size: "small",
     status: "done",
+    site: "https://sonka.software",
   },
   {
     id: "aegis-loader",
@@ -82,22 +83,30 @@ const PROJECTS: Project[] = [
     accent: "#6366f1",
     size: "small",
     status: "wip",
-    github: "https://github.com/prxtenses/repair-json-stream",
+    site: "https://github.com/prxtenses/repair-json-stream",
   },
 ];
 
 function ProjectCard({ project }: { project: Project }) {
   const cardRef = useRef<any>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
     setTilt({ rotateX: -y * 6, rotateY: x * 6 });
+    setMousePos({ 
+      x: ((e.clientX - rect.left) / rect.width) * 100, 
+      y: ((e.clientY - rect.top) / rect.height) * 100
+    });
   };
 
-  const handleMouseLeave = () => setTilt({ rotateX: 0, rotateY: 0 });
+  const handleMouseLeave = () => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+  };
 
   const sizeClass =
     project.size === "large"
@@ -106,13 +115,13 @@ function ProjectCard({ project }: { project: Project }) {
       ? "col-span-1 row-span-2"
       : "col-span-1 row-span-1";
 
-  const isLink = !!(project.github || project.live);
+  const isLink = !!(project.site || project.live);
   const Container = isLink ? motion.a : motion.div;
 
   return (
     <Container
       ref={cardRef}
-      href={project.github || project.live}
+      href={project.site || project.live}
       target={isLink ? "_blank" : undefined}
       rel={isLink ? "noopener noreferrer" : undefined}
       className={`project-card ${sizeClass} group relative overflow-hidden rounded-2xl p-7 liquid-blur glass-noise bg-[#0a0a0c]/40 border border-white/10 transition-all duration-300 hover:shadow-hover hover:border-white/20 ${isLink ? 'cursor-pointer block' : ''}`}
@@ -124,10 +133,13 @@ function ProjectCard({ project }: { project: Project }) {
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
         backdropFilter: "blur(28px) saturate(180%)",
         WebkitBackdropFilter: "blur(28px) saturate(180%)",
-      }}
+        "--x": `${mousePos.x}%`,
+        "--y": `${mousePos.y}%`,
+      } as any}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      <div className="glass-sheen" />
       {}
       <div
         className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full opacity-[0.12] blur-3xl transition-opacity duration-500 group-hover:opacity-[0.22]"
@@ -151,8 +163,8 @@ function ProjectCard({ project }: { project: Project }) {
             <span
               className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-xs font-medium"
               style={{
-                backgroundColor: "color-mix(in oklch, var(--sage) 15%, var(--background))",
-                color: "var(--sage)",
+                backgroundColor: "color-mix(in srgb, var(--sun) 20%, transparent)",
+                color: "var(--sun)",
               }}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
@@ -162,19 +174,19 @@ function ProjectCard({ project }: { project: Project }) {
             <span
               className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-xs font-medium"
               style={{
-                backgroundColor: "color-mix(in oklch, var(--emerald) 15%, var(--background))",
+                backgroundColor: "color-mix(in oklch, var(--emerald) 20%, var(--background))",
                 color: "var(--emerald)",
               }}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-current" />
+              <Check size={12} strokeWidth={3} />
               Done
             </span>
           ) : (
             <span
               className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-xs font-medium"
               style={{
-                backgroundColor: "color-mix(in oklch, var(--peach) 15%, var(--background))",
-                color: "oklch(0.55 0.07 60)",
+                backgroundColor: "color-mix(in oklch, var(--peach) 20%, var(--background))",
+                color: "var(--peach)",
               }}
             >
               <Construction size={10} />
@@ -215,13 +227,6 @@ function ProjectCard({ project }: { project: Project }) {
         ))}
       </div>
 
-      {}
-      <div className="absolute bottom-7 right-7 opacity-0 transition-all duration-300 translate-x-1 -translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0">
-        <ArrowUpRight
-          size={20}
-          style={{ color: project.accent }}
-        />
-      </div>
     </Container>
   );
 }
