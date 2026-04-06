@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import LiquidBackground from "@/components/ui/LiquidBackground";
 import AppProviders from "@/components/layout/AppProviders";
+import AnimatedTitle from "@/components/layout/AnimatedTitle";
 import "./globals.css";
 
 const inter = Inter({
@@ -62,6 +63,7 @@ export default function RootLayout({
         suppressHydrationWarning
         style={{ position: "relative" }}
       >
+        <AnimatedTitle />
         <LiquidBackground />
         <AppProviders>
           {children}
