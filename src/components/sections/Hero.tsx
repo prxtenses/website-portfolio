@@ -112,56 +112,28 @@ function RoleText() {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isMobile = useRef(false);
-
-  useEffect(() => {
-    isMobile.current = window.innerWidth < 768;
-  }, []);
-
   useGSAP(
     () => {
-      const mobile = isMobile.current;
-      const tl = gsap.timeline({ delay: mobile ? 0.1 : 0.25 });
+      const mm = gsap.matchMedia();
 
-      tl.from(".hero-label", {
-        opacity: 0,
-        y: 16,
-        duration: 0.7,
-        ease: "power2.out",
-      }, "-=1.4");
+      mm.add("(max-width: 767px)", () => {
+        // Mobile animations
+        const tl = gsap.timeline({ delay: 0.1 });
+        tl.from(".hero-label", { opacity: 0, y: 16, duration: 0.7, ease: "power2.out" }, "-=1.4");
+        tl.from(".hero-chars .split-char", { y: "110%", opacity: 0, rotateX: -40, stagger: 0.015, duration: 0.9, ease: "power4.out" }, "-=0.9");
+        tl.from([".hero-role", ".hero-desc"], { opacity: 0, y: 22, stagger: 0.1, duration: 0.8, ease: "power2.out" }, "-=0.5");
+        tl.from(".hero-cta", { opacity: 0, y: 18, stagger: 0.1, duration: 0.65, ease: "power2.out", clearProps: "all" }, "-=0.4");
+      });
 
-      tl.from(".hero-chars .split-char", {
-        y: "110%",
-        opacity: 0,
-        rotateX: -40,
-        stagger: mobile ? 0.015 : 0.028,
-        duration: 0.9,
-        ease: "power4.out",
-      }, "-=0.9");
-
-      tl.from([".hero-role", ".hero-desc"], {
-        opacity: 0,
-        y: 22,
-        stagger: mobile ? 0.1 : 0.2,
-        duration: 0.8,
-        ease: "power2.out",
-      }, "-=0.5");
-
-      tl.from(".hero-cta", {
-        opacity: 0,
-        y: 18,
-        stagger: 0.1,
-        duration: 0.65,
-        ease: "power2.out",
-        clearProps: "all" 
-      }, "-=0.4");
-
-      tl.from(".hero-scroll", {
-        opacity: 0,
-        duration: 0.6,
-        ease: "power1.out",
-      }, "-=0.1");
-
+      mm.add("(min-width: 768px)", () => {
+        // Desktop animations
+        const tl = gsap.timeline({ delay: 0.25 });
+        tl.from(".hero-label", { opacity: 0, y: 16, duration: 0.7, ease: "power2.out" }, "-=1.4");
+        tl.from(".hero-chars .split-char", { y: "110%", opacity: 0, rotateX: -40, stagger: 0.028, duration: 0.9, ease: "power4.out" }, "-=0.9");
+        tl.from([".hero-role", ".hero-desc"], { opacity: 0, y: 22, stagger: 0.2, duration: 0.8, ease: "power2.out" }, "-=0.5");
+        tl.from(".hero-cta", { opacity: 0, y: 18, stagger: 0.1, duration: 0.65, ease: "power2.out", clearProps: "all" }, "-=0.4");
+        tl.from(".hero-scroll", { opacity: 0, duration: 0.6, ease: "power1.out" }, "-=0.1");
+      });
     },
     { scope: sectionRef }
   );
