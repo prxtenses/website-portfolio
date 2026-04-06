@@ -19,6 +19,7 @@ export default function HeroPortrait() {
           sizes="(max-width: 480px) 100vw, (max-width: 768px) 70vw, (max-width: 1200px) 50vw, 450px"
           className="object-contain drop-shadow-2xl pointer-events-none select-none"
           priority
+          fetchPriority="high"
           quality={90}
           onContextMenu={(e) => e.preventDefault()}
         />
