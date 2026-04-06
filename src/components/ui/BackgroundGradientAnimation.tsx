@@ -68,19 +68,26 @@ export const BackgroundGradientAnimation = ({
   useEffect(() => {
     let requestFrameId: number;
 
-    function move() {
-      if (!interactiveRef.current) return;
+    const startAnimation = () => {
+      function move() {
+        if (!interactiveRef.current) return;
 
-      curX.current = curX.current + (tgX.current - curX.current) / 20;
-      curY.current = curY.current + (tgY.current - curY.current) / 20;
-      
-      interactiveRef.current.style.transform = `translate(${Math.round(curX.current)}px, ${Math.round(curY.current)}px)`;
-      
-      requestFrameId = requestAnimationFrame(move);
-    }
+        curX.current = curX.current + (tgX.current - curX.current) / 20;
+        curY.current = curY.current + (tgY.current - curY.current) / 20;
+        
+        interactiveRef.current.style.transform = `translate(${Math.round(curX.current)}px, ${Math.round(curY.current)}px)`;
+        
+        requestFrameId = requestAnimationFrame(move);
+      }
+      move();
+    };
+
+    const timer = setTimeout(startAnimation, 600);
     
-    move();
-    return () => cancelAnimationFrame(requestFrameId);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(requestFrameId);
+    };
   }, []);
 
   const containerRect = useRef<DOMRect | null>(null);

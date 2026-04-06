@@ -8,13 +8,21 @@ export default function LiquidBackground() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
+    
+    // Defer mounting to reduce TBT on high-end desktops
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 800);
+
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   if (!mounted || isMobile) return null;

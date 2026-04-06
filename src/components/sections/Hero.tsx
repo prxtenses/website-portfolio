@@ -208,13 +208,15 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="font-heading hero-chars mb-5 select-none overflow-hidden"
+            <h1 className="font-heading hero-chars mb-5 select-none overflow-hidden h-[1em] md:h-[1.1em]"
               style={{
                 fontSize: "clamp(3.5rem, 8vw, 7.5rem)",
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
                 color: "var(--foreground)",
-                whiteSpace: "nowrap"
+                whiteSpace: "nowrap",
+                containIntrinsicSize: "0 1em",
+                contentVisibility: "auto"
               }}
             >
               <SplitText
@@ -277,7 +279,7 @@ export default function Hero() {
 
           {}
           <div className="hero-video relative flex w-full justify-center pointer-events-auto md:justify-end order-first md:order-last mb-8 md:mb-0">
-             <div className="relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[620px] lg:max-w-[760px] h-auto">
+             <div className="relative w-full max-w-[400px] sm:max-w-[480px] md:max-w-[620px] lg:max-w-[760px] aspect-square">
                 <HeroPortrait />
              </div>
           </div>
