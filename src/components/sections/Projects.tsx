@@ -38,7 +38,7 @@ const PROJECTS: Project[] = [
     title: "Aegis",
     description:
       "A secure, multi-stage modular loader. Features advanced HWID-locking, server-side heartbeats, and anti-tamper measures to protect sensitive binary distribution.",
-    tags: ["C#", ".NET", "Security", "Crypto"],
+    tags: ["C++", "Remote", "Pe Injector", "Hwid-Auth", "Anti-Debug"],
     accent: "#8b5cf6",
     size: "small",
     status: "wip",
@@ -78,7 +78,7 @@ const PROJECTS: Project[] = [
     title: "repair-json-stream",
     description:
       "A lightweight utility for repairing broken or partial JSON streams in real-time. Designed for high-performance data processing pipelines.",
-    tags: ["TypeScript", "JSON", "Streaming", "Utility"],
+    tags: ["TypeScript", "JSON", "Streaming", "Utility", "IA"],
     accent: "#6366f1",
     size: "small",
     status: "wip",
