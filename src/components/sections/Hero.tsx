@@ -174,7 +174,7 @@ export default function Hero() {
         />
         
         {}
-        <div className="absolute inset-0 z-10 liquid-blur glass-noise opacity-50" />
+        <div className="absolute inset-0 z-10 liquid-blur glass-noise opacity-50 hidden md:block" />
 
         {}
         <div
