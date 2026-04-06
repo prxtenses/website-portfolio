@@ -2,7 +2,7 @@
 
 import { ReactLenis } from "lenis/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 interface AppProvidersProps {
@@ -11,8 +11,10 @@ interface AppProvidersProps {
 
 export default function AppProviders({ children }: AppProvidersProps) {
   const pathname = usePathname();
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
     };
@@ -35,7 +37,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}
-          initial={{ opacity: 0, y: 10, scale: 0.98 }}
+          initial={hasMounted ? { opacity: 0, y: 10, scale: 0.98 } : false}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.98 }}
           transition={{ 

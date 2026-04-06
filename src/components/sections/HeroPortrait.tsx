@@ -2,12 +2,19 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function HeroPortrait() {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   return (
     <div className="relative w-full max-w-[400px] sm:max-w-[550px] md:max-w-[300px] lg:max-w-[450px] mx-auto">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={hasMounted ? { opacity: 0, scale: 0.9 } : false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative aspect-square w-full"
