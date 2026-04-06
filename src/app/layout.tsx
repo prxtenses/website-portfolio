@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     "developer", "portfolio", "react", "node.js", "c++", "reverse engineering", "assembly", "full stack"
   ],
   authors: [{ name: "Sonka" }],
+  metadataBase: new URL("https://sonka.dev"),
   icons: {
     icon: [
       { url: "/images/favicon.png", sizes: "128x128", type: "image/png" },
