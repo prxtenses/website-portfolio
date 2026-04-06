@@ -25,9 +25,9 @@ const SOCIALS = [
   {
     id: "email-link",
     label: "Email",
-    href: "mailto:hello@sonka.dev",
+    href: "mailto:me@sonka.dev",
     icon: Mail,
-    note: "hello@sonka.dev",
+    note: "me@sonka.dev",
   },
   {
     id: "x-link",
