@@ -66,24 +66,22 @@ export const BackgroundGradientAnimation = ({
   ]);
 
   useEffect(() => {
-    let requestFrameId: number;
+    // Skip animation initialization on mobile to save CPU/TBT
+    const isSmallScreen = window.innerWidth < 768;
+    if (isSmallScreen) return;
 
+    let requestFrameId: number;
     const startAnimation = () => {
       function move() {
         if (!interactiveRef.current) return;
-
         curX.current = curX.current + (tgX.current - curX.current) / 20;
         curY.current = curY.current + (tgY.current - curY.current) / 20;
-        
         interactiveRef.current.style.transform = `translate(${Math.round(curX.current)}px, ${Math.round(curY.current)}px)`;
-        
         requestFrameId = requestAnimationFrame(move);
       }
       move();
     };
-
     const timer = setTimeout(startAnimation, 600);
-    
     return () => {
       clearTimeout(timer);
       cancelAnimationFrame(requestFrameId);
@@ -164,8 +162,7 @@ export const BackgroundGradientAnimation = ({
             `absolute [background:radial-gradient(circle_at_center,_rgba(var(--first-color),_0.6)_0,_rgba(var(--first-color),_0)_50%)_no-repeat]`,
             `[mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:center_center]`,
-            `animate-first`,
-            `opacity-100 will-change-transform`
+            isMobile ? "opacity-40" : "animate-first opacity-100 will-change-transform"
           )}
         ></div>
         <div
@@ -173,8 +170,7 @@ export const BackgroundGradientAnimation = ({
             `absolute [background:radial-gradient(circle_at_center,_rgba(var(--second-color),_0.6)_0,_rgba(var(--second-color),_0)_50%)_no-repeat]`,
             `[mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:calc(50%-400px)]`,
-            `animate-second`,
-            `opacity-100 will-change-transform`
+            isMobile ? "opacity-30" : "animate-second opacity-100 will-change-transform"
           )}
         ></div>
         <div

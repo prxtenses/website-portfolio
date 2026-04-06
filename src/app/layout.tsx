@@ -64,7 +64,15 @@ export default function RootLayout({
           href="/images/logo.webp"
           as="image"
           type="image/webp"
+          fetchPriority="high"
         />
+        {}
+        <style>{`
+          @font-face {
+            font-family: 'Space Grotesk';
+            font-display: optional;
+          }
+        `}</style>
       </head>
       <body 
         className="min-h-screen bg-[#0a0a0c] text-foreground selection:bg-primary/30"
