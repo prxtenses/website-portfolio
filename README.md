@@ -2,7 +2,7 @@
 
 Personal portfolio focused on low-level systems, reverse engineering, and Direct Memory Access (DMA).
 
-The frontend is built to reflect a "Liquid Glass" / "Machine-Layer" aesthetic, balancing high-level web tech with a technical, debugger-inspired UI.
+The frontend is built to reflect a "Liquid Glass" / "Machine-Layer" aesthetic.
 
 ## Core Focus
 - **Low-Level Development:** C++, ASM (x86/x64), Win32 API.
