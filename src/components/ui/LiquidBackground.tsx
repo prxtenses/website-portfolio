@@ -5,12 +5,19 @@ import { useEffect, useState } from "react";
 
 export default function LiquidBackground() {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || isMobile) return null;
 
   return (
     <div className="fixed inset-0 -z-50 h-full w-full overflow-hidden pointer-events-none">

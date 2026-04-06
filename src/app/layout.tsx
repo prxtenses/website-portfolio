@@ -58,6 +58,14 @@ export default function RootLayout({
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >
+      <head>
+        <link
+          rel="preload"
+          href="/images/logo.webp"
+          as="image"
+          type="image/webp"
+        />
+      </head>
       <body 
         className="min-h-screen bg-[#0a0a0c] text-foreground selection:bg-primary/30"
         suppressHydrationWarning
@@ -70,7 +78,7 @@ export default function RootLayout({
         </AppProviders>
         
         {}
-        <svg className="pointer-events-none fixed h-0 w-0" aria-hidden="true">
+        <svg className="pointer-events-none fixed h-0 w-0 hidden md:block" aria-hidden="true">
           <filter id="noiseFilter">
             <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
             <feColorMatrix type="saturate" values="0" />

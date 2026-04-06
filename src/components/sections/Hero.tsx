@@ -112,10 +112,16 @@ function RoleText() {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useRef(false);
+
+  useEffect(() => {
+    isMobile.current = window.innerWidth < 768;
+  }, []);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ delay: 0.25 });
+      const mobile = isMobile.current;
+      const tl = gsap.timeline({ delay: mobile ? 0.1 : 0.25 });
 
       tl.from(".hero-label", {
         opacity: 0,
@@ -128,7 +134,7 @@ export default function Hero() {
         y: "110%",
         opacity: 0,
         rotateX: -40,
-        stagger: 0.028,
+        stagger: mobile ? 0.015 : 0.028,
         duration: 0.9,
         ease: "power4.out",
       }, "-=0.9");
@@ -136,7 +142,7 @@ export default function Hero() {
       tl.from([".hero-role", ".hero-desc"], {
         opacity: 0,
         y: 22,
-        stagger: 0.2,
+        stagger: mobile ? 0.1 : 0.2,
         duration: 0.8,
         ease: "power2.out",
       }, "-=0.5");

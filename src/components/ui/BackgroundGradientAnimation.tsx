@@ -98,8 +98,17 @@ export const BackgroundGradientAnimation = ({
   }, []);
 
   const [isSafari, setIsSafari] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
   useEffect(() => {
     setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
@@ -127,7 +136,7 @@ export const BackgroundGradientAnimation = ({
       <div
         className={cn(
           "gradients-container absolute inset-0 blur-lg pointer-events-none z-0",
-          isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(60px)]"
+          isMobile ? "blur-2xl" : isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(60px)]"
         )}
       >
         <div
@@ -154,7 +163,7 @@ export const BackgroundGradientAnimation = ({
             `[mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:calc(50%+400px)]`,
             `animate-third`,
-            `opacity-100 will-change-transform`
+            `opacity-100 will-change-transform hidden sm:block`
           )}
         ></div>
         <div
