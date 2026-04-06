@@ -24,10 +24,10 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    id: "aurora-hvh",
-    title: "Aurora",
+    id: "sonka-software",
+    title: "Sonka Software",
     description:
-      "A premium, invite-only internal cheat focused on CS:GO High-Volatility (HvH) gameplay. Engineered for maximum performance with custom resolvers, back-track systems, and a kernel-based protection layer.",
+      "A premium, invite-only internal cheat focused on CS:GO HvH. Engineered for maximum performance with hand-made resolver, backtrack system and highly customizable visuals.",
     tags: ["C++", "HvH", "Kernel", "Reverse Engineering", "Invite-Only"],
     accent: "#6366f1",
     size: "small",
