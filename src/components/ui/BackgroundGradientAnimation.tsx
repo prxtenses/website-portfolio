@@ -83,11 +83,24 @@ export const BackgroundGradientAnimation = ({
     return () => cancelAnimationFrame(requestFrameId);
   }, []);
 
+  const containerRect = useRef<DOMRect | null>(null);
+
+  useEffect(() => {
+    const updateRect = () => {
+      if (interactiveRef.current) {
+        containerRect.current = interactiveRef.current.getBoundingClientRect();
+      }
+    };
+
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => window.removeEventListener("resize", updateRect);
+  }, []);
+
   useEffect(() => {
     const handleMouseMoveGlobal = (event: MouseEvent) => {
-      if (interactiveRef.current) {
-        const rect = interactiveRef.current.getBoundingClientRect();
-        
+      if (containerRect.current) {
+        const rect = containerRect.current;
         tgX.current = event.clientX - rect.left;
         tgY.current = event.clientY - rect.top;
       }
